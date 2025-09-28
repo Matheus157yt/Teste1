@@ -1,0 +1,22 @@
+/* styles for complex sandbox */
+:root{--bg:#0f0f10;--card:#161616;--accent:#e60000;--muted:#9aa0a6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#fff;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.03)}
+.brand{font-weight:700}
+.container{max-width:1100px;margin:18px auto;padding:12px}
+.panel{background:var(--card);padding:14px;border-radius:10px;margin-bottom:16px}
+.cols{display:flex;gap:12px}
+input{display:block;width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:#0c0c0c;color:#fff}
+button{background:var(--accent);border:none;padding:10px 12px;border-radius:8px;color:#fff;cursor:pointer;margin:6px}
+.hidden{display:none}
+.dashhead{display:flex;justify-content:space-between;align-items:center}
+.cards{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
+.card{width:260px;background:#0b0b0b;border-radius:10px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.6)}
+.card img{width:100%;height:140px;object-fit:cover;display:block}
+.card .body{padding:10px}
+.avatar{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--accent)}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.hint{color:var(--muted);font-size:13px;margin-top:6px}
+iframe{width:100%;height:360px;border:1px solid rgba(255,255,255,0.04);border-radius:8px;margin-top:10px}
+.adminForm{margin-top:10px}

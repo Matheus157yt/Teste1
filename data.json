@@ -1,0 +1,76 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "nome": "Matheus Henrique",
+      "email": "matheush5432191@gmail.com",
+      "usuario": "f5432191",
+      "senha": "f5432191",
+      "tipo": "admin",
+      "avatar": "",
+      "progresso": {},
+      "badges": [],
+      "xp": 0,
+      "cursosComprados": []
+    },
+    {
+      "id": 2,
+      "nome": "Aluno Exemplo",
+      "email": "aluno@exemplo.com",
+      "usuario": "aluno1",
+      "senha": "123456",
+      "tipo": "aluno",
+      "avatar": "",
+      "progresso": {},
+      "badges": [],
+      "xp": 0,
+      "cursosComprados": []
+    }
+  ],
+  "courses": [
+    {
+      "id": 1,
+      "titulo": "Introdu\u00e7\u00e3o Gr\u00e1tis",
+      "tipo": "gratis",
+      "desbloqueado": true,
+      "preco": 0,
+      "banner": "https://picsum.photos/600/360?1",
+      "aulas": [
+        "Boas-vindas",
+        "Como usar a plataforma"
+      ],
+      "requisitos": []
+    },
+    {
+      "id": 2,
+      "titulo": "Avan\u00e7ado Pago",
+      "tipo": "pago",
+      "desbloqueado": false,
+      "preco": 79.9,
+      "banner": "https://picsum.photos/600/360?2",
+      "aulas": [
+        "Aula 1",
+        "Aula 2",
+        "Aula 3"
+      ],
+      "requisitos": [
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "titulo": "Desafio Especial",
+      "tipo": "gratis",
+      "desbloqueado": false,
+      "preco": 0,
+      "banner": "https://picsum.photos/600/360?3",
+      "aulas": [
+        "Desafio 1"
+      ],
+      "requisitos": [
+        1,
+        2
+      ]
+    }
+  ]
+}
