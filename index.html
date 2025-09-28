@@ -1,111 +1,18 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Complex Sandbox — All-in-one (No folders)</title>
+<meta charset="UTF-8">
+<title>Login - Design Business</title>
 <link rel="stylesheet" href="style.css">
+<script src="login.js"></script>
 </head>
 <body>
-<header class="topbar">
-  <div class="brand">Complex Sandbox</div>
-  <div class="actions">
-    <span id="who">Offline</span>
-  </div>
-</header>
-
-<main class="container">
-  <section class="panel" id="authPanel">
-    <h2>Entrar / Registrar</h2>
-    <div class="cols">
-      <div>
-        <h3>Login</h3>
-        <input id="loginId" placeholder="E-mail ou usuário" />
-        <input id="loginSenha" type="password" placeholder="Senha" />
-        <button id="btnLogin">Entrar</button>
-      </div>
-      <div>
-        <h3>Registro</h3>
-        <input id="regNome" placeholder="Nome completo" />
-        <input id="regUsuario" placeholder="Usuário" />
-        <input id="regEmail" placeholder="E-mail" />
-        <input id="regSenha" type="password" placeholder="Senha" />
-        <button id="btnRegister">Registrar</button>
-      </div>
-    </div>
-  </section>
-
-  <section class="panel hidden" id="dashboardPanel">
-    <header class="dashhead">
-      <div>
-        <h2>Dashboard</h2>
-        <div>Usuário: <span id="userName">—</span> • XP: <span id="userXP">0</span></div>
-      </div>
-      <div>
-        <button id="btnProfile">Perfil</button>
-        <button id="btnConcurso">Concurso</button>
-        <button id="btnAdmin" class="hidden">Admin</button>
-        <button id="btnLogout">Sair</button>
-      </div>
-    </header>
-
-    <div id="badges" class="badges"></div>
-    <div id="courses" class="cards"></div>
-  </section>
-
-  <section class="panel hidden" id="profilePanel">
-    <h2>Perfil</h2>
-    <div class="cols">
-      <div>
-        <img id="avatarImg" class="avatar" src="" alt="Avatar"/>
-        <input id="avatarFile" type="file" accept="image/*" />
-      </div>
-      <div>
-        <input id="profileName" placeholder="Nome" />
-        <input id="profileEmail" placeholder="E-mail" />
-        <input id="profileUsuario" placeholder="Usuário" />
-        <button id="btnSaveProfile">Salvar</button>
-        <button id="btnBackDash">Voltar</button>
-      </div>
-    </div>
-  </section>
-
-  <section class="panel hidden" id="concursoPanel">
-    <h2>Área de Concurso</h2>
-    <div id="challenges" class="cards"></div>
-    <button id="btnBackDash2">Voltar</button>
-  </section>
-
-  <section class="panel hidden" id="adminPanel">
-    <h2>Painel Admin</h2>
-    <div>
-      <h3>Usuários</h3>
-      <div id="adminUsers"></div>
-    </div>
-    <div>
-      <h3>Cursos</h3>
-      <div id="adminCourses"></div>
-      <div class="adminForm">
-        <input id="newCourseTitle" placeholder="Título" />
-        <input id="newCourseBanner" placeholder="URL banner (opcional)" />
-        <input id="newCoursePrice" placeholder="Preço (0 grátis)" />
-        <input id="newCourseAulas" placeholder="Aulas (separadas por | )" />
-        <input id="newCourseReq" placeholder="Requisitos (ids csv)" />
-        <button id="btnCreateCourse">Criar Curso</button>
-      </div>
-    </div>
-    <button id="btnBackDash3">Voltar</button>
-  </section>
-
-  <section class="panel hidden" id="previewPanel">
-    <h2>Preview / Test runner</h2>
-    <input id="zipUpload" type="file" accept=".zip" />
-    <div class="hint">Envie um ZIP com site estático (index.html na raiz) para pré-visualizar.</div>
-    <iframe id="previewFrame" sandbox="allow-scripts allow-forms allow-same-origin" srcdoc="<p style='padding:20px'>Preview vazio</p>"></iframe>
-  </section>
-
-</main>
-
-<script src="script.js"></script>
+<h1>Login</h1>
+<form id="loginForm">
+  <input type="text" id="username" placeholder="Usuário" required>
+  <input type="password" id="password" placeholder="Senha" required>
+  <button type="submit">Entrar</button>
+</form>
 </body>
 </html>

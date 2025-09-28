@@ -1,76 +1,16 @@
+
 {
-  "users": [
-    {
-      "id": 1,
-      "nome": "Matheus Henrique",
-      "email": "matheush5432191@gmail.com",
-      "usuario": "f5432191",
-      "senha": "f5432191",
-      "tipo": "admin",
-      "avatar": "",
-      "progresso": {},
-      "badges": [],
-      "xp": 0,
-      "cursosComprados": []
-    },
-    {
-      "id": 2,
-      "nome": "Aluno Exemplo",
-      "email": "aluno@exemplo.com",
-      "usuario": "aluno1",
-      "senha": "123456",
-      "tipo": "aluno",
-      "avatar": "",
-      "progresso": {},
-      "badges": [],
-      "xp": 0,
-      "cursosComprados": []
-    }
+  "users":[
+    {"name":"Matheus Henrique","email":"matheush5432191@gmail.com","username":"f5432191","password":"f5432191","role":"admin"},
+    {"name":"Ninja DM","email":"ninjadm@creativeacademy.com","username":"ninjadm","password":"ninjadm123","role":"admin"},
+    {"name":"João Silva","email":"joao@exemplo.com","username":"joao","password":"123456","role":"aluno"},
+    {"name":"Ana Souza","email":"ana@exemplo.com","username":"ana","password":"123456","role":"aluno"},
+    {"name":"Pedro Lima","email":"pedro@exemplo.com","username":"pedro","password":"123456","role":"aluno"}
   ],
-  "courses": [
-    {
-      "id": 1,
-      "titulo": "Introdu\u00e7\u00e3o Gr\u00e1tis",
-      "tipo": "gratis",
-      "desbloqueado": true,
-      "preco": 0,
-      "banner": "https://picsum.photos/600/360?1",
-      "aulas": [
-        "Boas-vindas",
-        "Como usar a plataforma"
-      ],
-      "requisitos": []
-    },
-    {
-      "id": 2,
-      "titulo": "Avan\u00e7ado Pago",
-      "tipo": "pago",
-      "desbloqueado": false,
-      "preco": 79.9,
-      "banner": "https://picsum.photos/600/360?2",
-      "aulas": [
-        "Aula 1",
-        "Aula 2",
-        "Aula 3"
-      ],
-      "requisitos": [
-        1
-      ]
-    },
-    {
-      "id": 3,
-      "titulo": "Desafio Especial",
-      "tipo": "gratis",
-      "desbloqueado": false,
-      "preco": 0,
-      "banner": "https://picsum.photos/600/360?3",
-      "aulas": [
-        "Desafio 1"
-      ],
-      "requisitos": [
-        1,
-        2
-      ]
-    }
+  "courses":[
+    {"title":"Design Gráfico Profissional","type":"Pago","price":19.90,"link":"#","banner":"https://via.placeholder.com/300x150/000000/FF0000?text=Design+Gráfico+Profissional"},
+    {"title":"Photoshop do Zero ao Avançado","type":"Grátis","price":0.00,"link":"#","banner":"https://via.placeholder.com/300x150/000000/FF0000?text=Photoshop+Zero+Avançado"},
+    {"title":"Criação de Marcas Impactantes","type":"Pago","price":19.90,"link":"#","banner":"https://via.placeholder.com/300x150/000000/FF0000?text=Marcas+Impactantes"},
+    {"title":"Introdução ao Marketing Visual","type":"Grátis","price":0.00,"link":"#","banner":"https://via.placeholder.com/300x150/000000/FF0000?text=Marketing+Visual"}
   ]
 }
