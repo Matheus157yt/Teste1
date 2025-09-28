@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dashboard - Admin</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg">
+  <header class="header">
+    <div class="brand">Minha Área <span class="tag">Admin</span></div>
+    <div>
+      <button id="btnLogout" class="btn small">Sair</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Usuários</h2>
+      <div id="users"></div>
+      <h3>Criar usuário</h3>
+      <form id="createUser">
+        <input placeholder="Nome" id="u_name" required />
+        <input placeholder="E-mail" id="u_email" required />
+        <input placeholder="Senha" id="u_password" required />
+        <select id="u_role"><option value="student">student</option><option value="admin">admin</option></select>
+        <button class="btn primary">Criar</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Cursos</h2>
+      <div id="courses"></div>
+      <h3>Criar curso</h3>
+      <form id="createCourse">
+        <input placeholder="Título" id="c_title" required />
+        <input placeholder="Descrição" id="c_desc" />
+        <button class="btn primary">Criar curso</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Logs de auditoria</h2>
+      <div id="logs"></div>
+    </section>
+  </main>
+
+<script src="client.js"></script>
+<script>
+async function loadUsers(){
+  const res = await apiGet('/api/admin/users');
+  const el = document.getElementById('users');
+  el.innerHTML = '';
+  res.users.forEach(u=>{
+    const div = document.createElement('div');
+    div.className = 'admin-row';
+    div.innerHTML = `<strong>${u.name}</strong> - ${u.email} - <em>${u.role}</em> - bloqueado: ${u.blocked}
+      <button class="btn small" onclick="toggleBlock(${u.id},${u.blocked})">${u.blocked? 'Desbloquear' : 'Bloquear'}</button>
+      <button class="btn small" onclick="deleteUser(${u.id})">Excluir</button>`;
+    el.appendChild(div);
+  });
+}
+
+async function toggleBlock(id, blocked){
+  const name = prompt('Nome do usuário (para editar):');
+  const email = prompt('E-mail do usuário:');
+  const role = prompt('Role (admin/student):', 'student');
+  const res = await apiPut('/api/admin/users/'+id, { name: name||'Sem nome', email: email||'sem@ex', role, blocked: !blocked });
+  if (res && res.ok) loadUsers();
+}
+
+async function deleteUser(id){
+  if (!confirm('Confirmar exclusão?')) return;
+  const res = await apiDelete('/api/admin/users/'+id);
+  if (res && res.ok) loadUsers();
+}
+
+document.getElementById('createUser').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const name = document.getElementById('u_name').value;
+  const email = document.getElementById('u_email').value;
+  const password = document.getElementById('u_password').value;
+  const role = document.getElementById('u_role').value;
+  const res = await apiPost('/api/admin/users', { name,email,password,role });
+  if (res && res.user) { alert('Criado'); loadUsers(); }
+});
+
+async function loadCourses(){
+  const res = await apiGet('/api/admin/courses');
+  const el = document.getElementById('courses'); el.innerHTML='';
+  res.courses.forEach(c=>{
+    const div = document.createElement('div'); div.className='admin-row';
+    div.innerHTML = `<strong>${c.title}</strong> - ${c.description || ''} 
+      <button class="btn small" onclick="deleteCourse(${c.id})">Excluir</button>
+      <button class="btn small" onclick="openModules(${c.id})">Módulos</button>`;
+    el.appendChild(div);
+  });
+}
+
+document.getElementById('createCourse').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const title = document.getElementById('c_title').value;
+  const description = document.getElementById('c_desc').value;
+  const res = await apiPost('/api/admin/courses', { title, description });
+  if (res && res.course) { alert('Curso criado'); loadCourses(); }
+});
+
+async function deleteCourse(id){
+  if (!confirm('Confirma excluir curso?')) return;
+  const res = await apiDelete('/api/admin/courses/'+id);
+  if (res && res.ok) loadCourses();
+}
+
+async function openModules(courseId){
+  const res = await apiGet('/api/admin/courses/'+courseId+'/modules');
+  const mods = res.modules;
+  const modal = document.createElement('div'); modal.className='modal';
+  modal.innerHTML = `<div class="modal-content"><h3>Módulos</h3><div id="mods"></div>
+    <h4>Criar módulo</h4>
+    <input id="m_title" placeholder="Título" /><input id="m_content" placeholder="Conteúdo" /><button class="btn" onclick="createModule(${courseId})">Criar</button>
+    <button class="btn" onclick="document.body.removeChild(document.querySelector('.modal'))">Fechar</button></div>`;
+  document.body.appendChild(modal);
+  const modsEl = document.getElementById('mods');
+  mods.forEach(m=>{
+    const d = document.createElement('div'); d.className='admin-row';
+    d.innerHTML = `<strong>${m.title}</strong> - ${m.content || ''} <button class="btn small" onclick="deleteModule(${m.id})">Excluir</button>`;
+    modsEl.appendChild(d);
+  });
+}
+
+async function createModule(courseId){
+  const title = document.getElementById('m_title').value;
+  const content = document.getElementById('m_content').value;
+  const res = await apiPost('/api/admin/courses/'+courseId+'/modules', { title, content });
+  if (res && res.module) alert('Módulo criado');
+  document.location.reload();
+}
+
+async function deleteModule(id){
+  if (!confirm('Excluir módulo?')) return;
+  const res = await apiDelete('/api/admin/modules/'+id);
+  if (res && res.ok) document.location.reload();
+}
+
+async function loadLogs(){
+  const res = await apiGet('/api/admin/logs');
+  const el = document.getElementById('logs'); el.innerHTML='';
+  res.logs.forEach(l=>{
+    const d = document.createElement('div'); d.className='log-row';
+    d.innerText = `${l.created_at} - ${l.action} - ${l.details}`;
+    el.appendChild(d);
+  });
+}
+
+document.getElementById('btnLogout').addEventListener('click', async ()=>{
+  const refreshToken = localStorage.getItem('refreshToken');
+  await apiPost('/api/auth/logout', { refreshToken });
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  location.href = 'public_login.html';
+});
+
+loadUsers(); loadCourses(); loadLogs();
+</script>
+</body>
+</html>

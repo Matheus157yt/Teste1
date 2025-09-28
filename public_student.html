@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dashboard - Aluno</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg">
+  <header class="header">
+    <div class="brand">Minha Área <span class="tag">Aluno</span></div>
+    <div>
+      <button id="btnLogout" class="btn small">Sair</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Cursos disponíveis</h2>
+    <div id="courses" class="grid"></div>
+  </main>
+
+<script src="client.js"></script>
+<script>
+async function loadCourses(){
+  const res = await apiGet('/api/student/courses');
+  const el = document.getElementById('courses');
+  el.innerHTML = '';
+  if (!res || !res.courses) return el.innerHTML = '<p>Erro ao carregar.</p>';
+  res.courses.forEach(c=>{
+    const card = document.createElement('div');
+    card.className = 'course';
+    card.innerHTML = `<h3>${c.title}</h3><p>${c.description||''}</p>
+      <button class="btn" onclick="openCourse(${c.id})">Abrir curso</button>`;
+    el.appendChild(card);
+  });
+}
+
+async function openCourse(id){
+  const res = await apiGet('/api/student/courses/'+id+'/modules');
+  if (!res) return alert('Erro');
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  modal.innerHTML = `<div class="modal-content"><h3>Módulos</h3><div id="mods"></div><button class="btn" onclick="document.body.removeChild(document.querySelector('.modal'))">Fechar</button></div>`;
+  document.body.appendChild(modal);
+  const modsEl = document.getElementById('mods');
+  res.modules.forEach(m=>{
+    const done = res.completedModuleIds.includes(m.id);
+    const mDiv = document.createElement('div');
+    mDiv.className = 'module';
+    mDiv.innerHTML = `<strong>${m.title}</strong><p>${m.content||''}</p>
+      <div><button class="btn small" onclick="toggleComplete(${m.id}, ${id}, ${done})">${done? 'Desmarcar' : 'Marcar como concluído'}</button></div>`;
+    modsEl.appendChild(mDiv);
+  });
+}
+
+async function toggleComplete(moduleId, courseId, done){
+  const url = `/api/student/courses/${courseId}/modules/${moduleId}/${done? 'uncomplete' : 'complete'}`;
+  const res = await apiPost(url, {});
+  if (res && res.ok) {
+    alert('Atualizado');
+    location.reload();
+  } else alert('Erro');
+}
+
+document.getElementById('btnLogout').addEventListener('click', async ()=>{
+  const refreshToken = localStorage.getItem('refreshToken');
+  await apiPost('/api/auth/logout', { refreshToken });
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  location.href = 'public_login.html';
+});
+
+loadCourses();
+</script>
+</body>
+</html>
